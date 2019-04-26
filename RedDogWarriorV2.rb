@@ -1,4 +1,7 @@
 ########## RaceDog Class ##########
+require 'colorize'
+require 'colorized_string'
+require 'artii'
 
 class RaceDog
     attr_accessor(:name, :strength)
@@ -8,7 +11,7 @@ class RaceDog
     end
 end
 
-dog1 = RaceDog.new("Oriental Owen", 1000)
+dog1 = RaceDog.new("Oriental Owen", 100)
 dog2 = RaceDog.new("Burn The Jetts", 98)
 dog3 = RaceDog.new("Quares Emma", 100)
 dog4 = RaceDog.new("Go Slow Goldy", 85)
@@ -169,6 +172,9 @@ race6 = Race.new("Champions Cup")
 race7 = Race.new("You Wish You Were")
 race8 = Race.new("They just need wins")
 
+races_arr = []
+
+races_arr.push(race1,race2,race3,race4,race5,race6,race7,race8)
 
 ########## User Class ##########
 class User
@@ -213,7 +219,7 @@ def race_decider(user,race)
     first_place_index = new_rand.rand(0..dog_names.length-1)
     first_place = dog_names[first_place_index]
     
-    puts "And we have #{first_place} in first place!"
+    puts "And we have #{first_place.colorize(:red)} in #{'first'.red} place!"
 
     # dog_names.each do |name|
     #     if name == first_place
@@ -226,36 +232,28 @@ def race_decider(user,race)
     second_place_index = new_rand.rand(0..dog_names.length-1)
     second_place = dog_names[second_place_index]
 
-    puts "#{second_place} in second place!"
+    puts "#{second_place.colorize(:yellow)} in #{'second place!'.yellow}"
 
     dog_names.delete(second_place)
 
     third_place_index = new_rand.rand(0..dog_names.length-1)
     third_place = dog_names[third_place_index]
 
-    puts "And #{third_place} finished third!"
+    puts "And #{third_place.colorize(:blue)} finished #{'third!'.blue}"
 
     dog_names.delete(third_place)
-    # puts
-    # puts("KKKKKKKKKKKKK")
-    # puts "USER dog is: #{user.current_dog.name}"
-    # puts
-    # puts first_place
-    # puts second_place
-    # puts third_place
-    # puts "ZZZZZZZZZZZZ"
-    # puts
+    
     if (user.current_dog.name == first_place)
         user.score += 15
-        puts "You're score is now #{user.score}"
+        puts "You're score is now #{user.score}".colorize(:light_blue)
     elsif (user.current_dog.name == second_place)
         user.score += 7
-        puts "You're score is now #{user.score}"
+        puts "You're score is now #{user.score}".colorize(:light_blue)
     elsif (user.current_dog.name == third_place)
         user.score += 3
-        puts "You're score is now #{user.score}"
+        puts "You're score is now #{user.score}".colorize(:light_blue)
     elsif 
-        puts "You did not score points!"
+        puts "You did not score points!".colorize(:light_blue)
     end
 
 end
@@ -263,10 +261,11 @@ end
 ########## Location Selector Method ##########
 
 def location_selector
-    puts "Where would you like to go?"
+    puts "Where would you like to go? (please select a number)"
+    puts
     loc_sel = gets().strip
     if loc_sel.to_i == 1
-        puts "You're off to Mandurah!"
+        puts "You're off to #{'Mandurah'.yellow}!"
         sleep(1)
     elsif loc_sel == String
         puts "Please select a valid number!"
@@ -282,19 +281,13 @@ end
 ########## Display Race Selector Method ##########
 
 def display_dogs(race)
-    puts "Here are your choices for #{race.name}"
-    puts "1. #{race.race_num_arr[0].name} (#{race.race_num_arr[0].strength})"
-    puts "2. #{race.race_num_arr[1].name} (#{race.race_num_arr[1].strength})"
-    puts "3. #{race.race_num_arr[2].name} (#{race.race_num_arr[2].strength})"
-    puts "4. #{race.race_num_arr[3].name} (#{race.race_num_arr[3].strength})"
-    puts "5. #{race.race_num_arr[4].name} (#{race.race_num_arr[4].strength})"
-    puts "6. #{race.race_num_arr[5].name} (#{race.race_num_arr[5].strength})"
-    puts "7. #{race.race_num_arr[6].name} (#{race.race_num_arr[6].strength})"
-    puts "8. #{race.race_num_arr[7].name} (#{race.race_num_arr[7].strength})"
+    puts "Here are your choices for #{race.name}".colorize(:orange)
+    count = 0
+    while(count < 8)
+    puts "#{count + 1}. #{race.race_num_arr[count].name} (#{race.race_num_arr[count].strength})"
+    count += 1
+    end
 end
-
-########## 
-
 
 ########## User Selection Method ##########
 
@@ -329,100 +322,85 @@ def user_selection(user,race)
     end
 end
 
-########## Odds Calculated ##########
-
+########## User Score Update ##########
 
 
 ############################################### DO NOT BREAK ABOVE ####################################################
 
 puts
-puts "Welcome to Red Dog Warrior!"
-
-
-
-puts "What is your name?"
+puts "Welcome to..." 
+puts
+sleep(1)
+a = Artii::Base.new :font => 'slant' 
+puts a.asciify("Red Dog Warrior")
+puts
+puts
+sleep(1)
+puts "Please enter your name:"
 user1 = User.new(gets().strip.capitalize)
-
 puts
-puts "This is a greyhound racing simulation game! You'll be prompted to select go to a location on the, once you arrive at your location, the races will begin"
+sleep(1)
+puts "Hello #{user1.name.colorize(:orange)}!"
+sleep(1)
 puts
-puts "Before each race starts, you'll be shown the dogs racing in each race and their odds! You must choose only one dog that you think will win that race!"
+puts "This is a greyhound racing simulation game. You will be prompted to select a location to go, once you arrive at your location, the races will begin"
 puts
-puts "If your dog finishes 1st, you'll recieve with 15 points, if your dog finishes 2nd, you'll recieve 7 points, if your dog finishes 3rd, you'll recieve with 3 points."
+sleep(2)
+puts "Before each race starts, you'll be shown the dogs racing in each race and the strength of that dog! You must choose only one dog that you think will win that race!"
 puts
-
-puts "Here are the current locations available to you:
-    1. Mandurah"
+sleep(2)
+puts "If your dog finishes 1st, you'll receive 10 points."
+sleep(2)
+puts
+puts "If your dog finishes 2nd, you'll receive 5 points."
+sleep(2)
+puts
+puts "If your dog finishes 3rd, you'll receive 3 points."
+puts
+sleep(2)
+puts "Here are the current locations available to you:"
+sleep(2)
+puts
+puts "1. Mandurah"
+sleep(2)
+puts
 location_selector
 
-fill_race(race_dogs_array, race1)
+def race_method(race_dogs_array,race,user)
+    fill_race(race_dogs_array,race)
+    display_dogs(race)
+    user_selection(user,race)
+    race_decider(user,race)
+end
 
-# p race1.race_num_arr
+####### RACE 1 THROUGH 8 #######
 
-display_dogs(race1)
+def location_race(race_dogs_array,races_arr,user)
+    count = 0
+    while(count < 8)
+    race_method(race_dogs_array,races_arr[count],user)
+    count += 1
+    end
+end
 
-user_selection(user1,race1)
-
-race_decider(user1,race1)
-
-###### RACE 2 ######
-fill_race(race_dogs_array,race2)
-
-display_dogs(race2)
-
-user_selection(user1,race2)
-
-race_decider(user1,race2)
-###### RACE 3 ######
-fill_race(race_dogs_array,race3)
-
-display_dogs(race3)
-
-user_selection(user1,race3)
-
-race_decider(user1,race3)
-###### RACE 4 ######
-fill_race(race_dogs_array,race4)
-
-display_dogs(race4)
-
-user_selection(user1,race4)
-
-race_decider(user1,race4)
-###### RACE 5 ######
-fill_race(race_dogs_array,race5)
-
-display_dogs(race5)
-
-user_selection(user1,race5)
-
-race_decider(user1,race5)
-###### RACE 6 ######
-fill_race(race_dogs_array,race6)
-
-display_dogs(race6)
-
-user_selection(user1,race6)
-
-race_decider(user1,race6)
-###### RACE 7 ######
-fill_race(race_dogs_array,race7)
-
-display_dogs(race7)
-
-user_selection(user1,race7)
-
-race_decider(user1,race7)
-###### RACE 8 ######
-fill_race(race_dogs_array,race8)
-
-display_dogs(race8)
-
-user_selection(user1,race8)
-
-race_decider(user1,race8)
+location_race(race_dogs_array,races_arr,user1)
 
 puts
 puts
+puts "Your final score is #{user1.score}!".colorize(:red)
 puts
-puts("YOUR FINAL USER SCORE IS #{user1.score}")
+puts "Not bad, maybe try your luck again?"
+
+def play_again(race_dogs_array,races_arr,user)
+    user_choice = gets().strip
+    if user_choice == "yes"
+        location_race(race_dogs_array,races_arr,user)
+        elsif user_choice == "no"
+            puts "Goodbye, thanks for playing!"
+        else
+            puts "Please enter yes or no"
+            play_again(race_dogs_array,races_arr,user)
+    end
+end
+
+play_again(race_dogs_array,races_arr,user1)
