@@ -163,7 +163,7 @@ class Race < Location
     end
 end
 
-race1 = Race.new("Shit Kicker Stakes")
+race1 = Race.new("Puppy Kicker Stakes")
 race2 = Race.new("Maiden Plate")
 race3 = Race.new("Grade 1")
 race4 = Race.new("Grade 2")
